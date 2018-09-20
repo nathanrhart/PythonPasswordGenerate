@@ -2,6 +2,8 @@
    NOUNLIST AUTHOR: http://www.desiquintans.com/nounlist"""
 
 import random
+import time
+
 wordlist = []
 print("Password Generator V0.9")
 
@@ -16,6 +18,7 @@ minletters = 5
 maxletters = 8
 wordsamount = 4
 noiselevel = 1
+original = ""
 
 def menu():
   print("\nChoose parameters by typing the number, followed by setting (if required)")
@@ -24,6 +27,7 @@ def menu():
   print("wordsamount - Choose amount of words to use [1-30] default:4")
   print("noiselevel - Choose level of noise to apply [0-3] default:1")
   print("generate - Generate your password")
+  print("bruteforce - keep generating until last password is found")
   print("help - used to explain commands(no argument to reprint this menu)")
 
 def takeinput():
@@ -42,7 +46,7 @@ def generate():
   global wordlist
 
   password = ""
-  original = ""
+  global original
   
   ####START OF GENERATION
   for i in range(0, int(wordsamount)):
@@ -93,11 +97,33 @@ def generate():
   
   print("Your new password is: " + password)
   print("Before noise was: " + original)
-
-
   ####END OF GENERATION
   command(takeinput())
 
+def bruteforce():
+  global original
+  password = ""
+  count = 0
+  start = time.time()
+  
+  while password != original:
+    count += 1
+    password = ""
+    for i in range(0, int(wordsamount)):
+      randomword = ""
+      while len(randomword) < minletters or len(randomword) > maxletters:
+        randomword = random.choice(wordlist)
+      password += randomword
+    if count % 10000000 == 0:
+      end = time.time()
+      print("Time Spent: " + str(end-start) )
+      print("Running Pass: " + str(count))
+  if password == original:
+    print("Password found! Amount of tries: " + str(count) )
+    print("Time Spent: " + str(end-start) )
+    menu()
+    command(takeinput())
+    
 def command(userinput):
   global minletters
   global maxletters
@@ -130,6 +156,10 @@ def command(userinput):
 
   elif userinput[0] == "generate":
     generate()
+    return
+
+  elif userinput[0] == "bruteforce":
+    bruteforce()
     return
 
   elif userinput[0] == "help":
