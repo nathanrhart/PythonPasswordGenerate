@@ -97,10 +97,12 @@ def generate():
   
   print("Your new password is: " + password)
   print("Before noise was: " + original)
+  original = ""
   ####END OF GENERATION
   command(takeinput())
 
 def bruteforce():
+  print("Starting brute force attack!")
   global original
   password = ""
   count = 0
