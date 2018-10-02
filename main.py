@@ -121,6 +121,7 @@ def bruteforce():
       print("Time Spent: " + str(end-start) )
       print("Running Pass: " + str(count))
   if password == original:
+    end = time.time()
     print("Password found! Amount of tries: " + str(count) )
     print("Time Spent: " + str(end-start) )
     print("Password was: " + original)
