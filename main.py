@@ -142,7 +142,7 @@ def command(userinput):
 
   if userinput[0] == "maxletters":
     try:
-      minletters = int(userinput[1])
+      maxletters = int(userinput[1])
       print("Maximum letters per word is now: " + str(maxletters))
     except: print("Check your inputs!")
     
